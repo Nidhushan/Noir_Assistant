@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    <title>Noir</title>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Noir</h2>
+            </div>
+
+            <button id="new-chat-button">New Chat</button>
+
+            <div id="conversation-list"></div>
+        </aside>
+        
+        <main class="chat-container">
+
+            <section class="chat-messages" id="chat-messages"></section>
+
+            <form class="chat-input" id="chat-form">
+                <span class="terminal-prompt">›</span>
+
+                <input
+                    type="text"
+                    id="message-input"
+                    placeholder="Type a message..."
+                    autocomplete="off"
+                    required
+                >
+
+                <button type="submit" aria-label="Send message">→</button>
+            </form>
+        </main> 
+    </div>
+
+    <script src="{{ url_for('static', path='/js/app.js') }}"></script>
+</body>
+</html>

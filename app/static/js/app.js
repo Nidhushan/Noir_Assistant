@@ -21,7 +21,7 @@ chatForm.addEventListener("submit", async function(event) {
         return;
     }
 
-    displayMessage("user", message);
+    const userMessageElement = displayMessage("user", message, "pending");
     messageInput.value = "";
     sendButton.disabled = true;
 
@@ -40,7 +40,11 @@ chatForm.addEventListener("submit", async function(event) {
         });
         
         if (!response.ok) {
-            throw new Error("Request failed");
+            const errorData = await response.json();
+
+            throw new Error(
+                errorData.detail || "Something went wrong. Please try again."
+            );
         }
         
         const data = await response.json();
@@ -58,11 +62,17 @@ chatForm.addEventListener("submit", async function(event) {
     }
     catch (error) {
         console.error("Error:", error.message);
-        const errorMessage = document.createElement("div");
-        errorMessage.textContent = "Sorry, something went wrong. Please try again.";
-        errorMessage.classList.add("message", "error-message");
-        chatMessages.appendChild(errorMessage);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        const errorIndicator = document.createElement("span");
+        errorIndicator.classList.add("message-error-indicator");
+        errorIndicator.textContent = "ⓘ";
+
+        const tooltip = document.createElement("span");
+        tooltip.classList.add("error-tooltip");
+        tooltip.textContent = error.message;
+
+        errorIndicator.appendChild(tooltip);
+        userMessageElement.appendChild(errorIndicator);
     }
     finally {
         sendButton.disabled = false;
@@ -80,7 +90,13 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             data.messages.forEach(function(message) {
-                displayMessage(message.role, message.content);
+                displayMessage(
+                    message.role,
+                    message.content,
+                    message.status,
+                    message.error_code,
+                    message.error_detail
+                );
             });
         })
         .catch(error => {
@@ -115,7 +131,13 @@ async function loadConversations() {
                 .then(data => {
                     chatMessages.innerHTML = "";
                     data.messages.forEach(function(message) {
-                        displayMessage(message.role, message.content);
+                        displayMessage(
+                            message.role,
+                            message.content,
+                            message.status,
+                            message.error_code,
+                            message.error_detail
+                        );
                     });
                     focusMessageInput();
                 });
@@ -125,7 +147,7 @@ async function loadConversations() {
     });
 }
 
-function displayMessage(role, content) {
+function displayMessage(role, content, status = "completed", errorCode = null, errorDetail = null) {
     const messageElement = document.createElement("div");
     messageElement.classList.add("message");
 
@@ -148,8 +170,23 @@ function displayMessage(role, content) {
     messageElement.appendChild(speakerElement);
     messageElement.appendChild(contentElement);
 
+    if (role === "user" && status === "failed") {
+        const errorIndicator = document.createElement("span");
+        errorIndicator.classList.add("message-error-indicator");
+        errorIndicator.textContent = "ⓘ";
+        const tooltip = document.createElement("span");
+        tooltip.classList.add("error-tooltip");
+        tooltip.textContent = `${errorCode}: ${errorDetail}`;
+
+        errorIndicator.appendChild(tooltip);
+
+        messageElement.appendChild(errorIndicator);
+    }
+
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    return messageElement;
 }
 
 function focusMessageInput() {

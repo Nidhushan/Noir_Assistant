@@ -1,4 +1,5 @@
 
+import logging
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -6,6 +7,12 @@ from contextlib import asynccontextmanager
 from app.db.database import initialize_database
 
 from app.api.routes import chat, health
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

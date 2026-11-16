@@ -5,6 +5,13 @@ from app.db.database import (
     get_messages,
     update_message_status
 )
+from app.config import (
+    LLM_BASE_URL,
+    LLM_MODEL,
+    LLM_TEMPERATURE,
+    LLM_MAX_TOKENS,
+    LLM_TIMEOUT
+)
 
 async def process_message(message: str, conversation_id: int | None = None):
     if conversation_id is None:
@@ -43,14 +50,14 @@ async def process_message(message: str, conversation_id: int | None = None):
     print("Messages sent to LLM:", messages)
 
     try:
-        async with httpx.AsyncClient(timeout=120.0) as client:
+        async with httpx.AsyncClient(timeout=LLM_TIMEOUT) as client:
             response = await client.post(
-                "http://localhost:8000/v1/chat/completions",
+                f"{LLM_BASE_URL}/chat/completions",
                 json={
-                    "model": "mlx-community/Qwen3-0.6B-4bit",
+                    "model": LLM_MODEL,
                     "messages": messages,
-                    "temperature": 0.7,
-                    "max_tokens": 1024
+                    "temperature": LLM_TEMPERATURE,
+                    "max_tokens": LLM_MAX_TOKENS
                 }
             )
             response.raise_for_status()

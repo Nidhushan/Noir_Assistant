@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 LLM_BASE_URL = os.getenv(
     "NOIR_LLM_BASE_URL",

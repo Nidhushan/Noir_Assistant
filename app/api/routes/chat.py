@@ -25,7 +25,7 @@ async def chat(request: ChatRequest):
                 detail="Conversation not found"
             )
 
-    conversation_id, reply = process_message(
+    conversation_id, reply = await process_message(
         request.message,
         request.conversation_id
     )

@@ -1,3 +1,4 @@
+import httpx
 from fastapi import APIRouter, HTTPException
 from app.schemas.chat import ChatRequest, ChatResponse
 from app.services.chat_service import process_message
@@ -25,10 +26,35 @@ async def chat(request: ChatRequest):
                 detail="Conversation not found"
             )
 
-    conversation_id, reply = await process_message(
-        request.message,
-        request.conversation_id
-    )
+    try:
+        conversation_id, reply = await process_message(
+            request.message,
+            request.conversation_id
+        )
+
+    except httpx.ConnectError:
+        raise HTTPException(
+            status_code=503,
+            detail="The local language model is unavailable. Check whether vLLM is running."
+        )
+
+    except httpx.TimeoutException:
+        raise HTTPException(
+            status_code=504,
+            detail="The model took too long to respond. Please try again."
+        )
+
+    except httpx.HTTPStatusError:
+        raise HTTPException(
+            status_code=502,
+            detail="The local model returned an unsuccessful response."
+        )
+
+    except httpx.RequestError:
+        raise HTTPException(
+            status_code=502,
+            detail="Could not communicate with the local language model."
+        )
 
     return {
         "received_message": reply,

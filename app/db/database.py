@@ -33,6 +33,31 @@ def initialize_database():
                 ON DELETE CASCADE
         )
     """)
+
+    # Add generation status and error details to existing databases.
+    columns = {
+        row["name"]
+        for row in connection.execute("PRAGMA table_info(messages)")
+    }
+
+    if "status" not in columns:
+        connection.execute("""
+            ALTER TABLE messages
+            ADD COLUMN status TEXT NOT NULL DEFAULT 'completed'
+        """)
+
+    if "error_code" not in columns:
+        connection.execute("""
+            ALTER TABLE messages
+            ADD COLUMN error_code TEXT
+        """)
+
+    if "error_detail" not in columns:
+        connection.execute("""
+            ALTER TABLE messages
+            ADD COLUMN error_detail TEXT
+        """)
+
     connection.commit()
     connection.close()
 
@@ -52,15 +77,20 @@ def create_conversation(title: str) -> int:
 
     return conversation_id
 
-def save_message(conversation_id: int, role: str, content: str):
+def save_message(
+    conversation_id: int,
+    role: str,
+    content: str,
+    status: str = "completed"
+) -> int:
     connection = get_connection()
 
-    connection.execute(
+    cursor = connection.execute(
         """
-        INSERT INTO messages (conversation_id, role, content)
-        VALUES (?, ?, ?)
+        INSERT INTO messages (conversation_id, role, content, status)
+        VALUES (?, ?, ?, ?)
         """,
-        (conversation_id, role, content)
+        (conversation_id, role, content, status)
     )
 
     connection.execute(
@@ -73,6 +103,31 @@ def save_message(conversation_id: int, role: str, content: str):
     )
 
     connection.commit()
+
+    message_id = cursor.lastrowid
+
+    connection.close()
+
+    return message_id
+
+def update_message_status(
+    message_id: int,
+    status: str,
+    error_code: str | None = None,
+    error_detail: str | None = None
+):
+    connection = get_connection()
+
+    connection.execute(
+        """
+        UPDATE messages
+        SET status = ?, error_code = ?, error_detail = ?
+        WHERE id = ?
+        """,
+        (status, error_code, error_detail, message_id)
+    )
+
+    connection.commit()
     connection.close()
 
 def get_messages(conversation_id: int) -> list:
@@ -80,7 +135,7 @@ def get_messages(conversation_id: int) -> list:
 
     cursor = connection.execute(
         """
-        SELECT id, role, content, created_at
+        SELECT id, role, content, created_at, status, error_code, error_detail
         FROM messages
         WHERE conversation_id = ?
         ORDER BY id ASC

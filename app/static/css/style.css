@@ -280,3 +280,51 @@ body {
     border: 1px solid rgba(255, 60, 60, 0.25);
     color: #ff8585;
 }
+
+.message-error-indicator {
+    display: inline-flex;
+    align-items: center;
+    color: #ff6b6b;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: help;
+    margin-left: 4px;
+}
+
+.message-error-indicator {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    color: #ff6b6b;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: help;
+    margin-left: 4px;
+}
+
+.error-tooltip {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 8px);
+    width: 260px;
+    padding: 10px 12px;
+
+    background: #242033;
+    border: 1px solid rgba(255, 107, 107, 0.35);
+    border-radius: 6px;
+
+    color: #e6edf7;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.message-error-indicator:hover .error-tooltip {
+    display: block;
+}

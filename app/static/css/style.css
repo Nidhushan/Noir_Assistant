@@ -108,6 +108,7 @@ body {
 .message-speaker {
     flex-shrink: 0;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .assistant-message .message-speaker {
@@ -120,7 +121,6 @@ body {
 
 .message-content {
     color: #dedee8;
-    white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
 

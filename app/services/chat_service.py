@@ -1,4 +1,5 @@
 import httpx
+import logging
 from app.db.database import (
     create_conversation,
     save_message,
@@ -12,6 +13,8 @@ from app.config import (
     LLM_MAX_TOKENS,
     LLM_TIMEOUT
 )
+
+logger = logging.getLogger(__name__)
 
 async def process_message(message: str, conversation_id: int | None = None):
     if conversation_id is None:
@@ -47,7 +50,7 @@ async def process_message(message: str, conversation_id: int | None = None):
     """
     })
 
-    print("Messages sent to LLM:", messages)
+    logger.info("Sending request to model: %s", LLM_MODEL)
 
     try:
         async with httpx.AsyncClient(timeout=LLM_TIMEOUT) as client:
@@ -64,24 +67,32 @@ async def process_message(message: str, conversation_id: int | None = None):
             data = response.json()
 
     except httpx.ConnectError as exc:
+        logger.warning("Local model connection failed: %s", exc)
         update_message_status(
             user_message_id, "failed", "503", str(exc)
         )
         raise
 
     except httpx.TimeoutException as exc:
+        logger.warning("Local model request timed out: %s", exc)
         update_message_status(
             user_message_id, "failed", "504", str(exc)
         )
         raise
 
     except httpx.HTTPStatusError as exc:
+        logger.error(
+            "Local model returned HTTP %s: %s",
+            exc.response.status_code,
+            exc
+        )
         update_message_status(
             user_message_id, "failed", "502", str(exc)
         )
         raise
 
     except httpx.RequestError as exc:
+        logger.error("Local model request failed: %s", exc)
         update_message_status(
             user_message_id, "failed", "502", str(exc)
         )

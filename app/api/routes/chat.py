@@ -1,14 +1,18 @@
+import json
 import httpx
 from fastapi import APIRouter, HTTPException
-from app.schemas.chat import ChatRequest, ChatResponse
-from app.services.chat_service import process_message
+from fastapi.responses import StreamingResponse
+
+from app.schemas.chat import ChatRequest
+from app.services.chat_service import stream_message
 from app.db.database import get_conversation, get_messages, get_all_conversations
 
 router = APIRouter(
     tags=["Chat"]
 )
 
-@router.post("/chat", response_model=ChatResponse)
+
+@router.post("/chat")
 async def chat(request: ChatRequest):
 
     if not request.message.strip():
@@ -26,40 +30,56 @@ async def chat(request: ChatRequest):
                 detail="Conversation not found"
             )
 
-    try:
-        conversation_id, reply = await process_message(
-            request.message,
-            request.conversation_id
-        )
+    async def event_stream():
 
-    except httpx.ConnectError:
-        raise HTTPException(
-            status_code=503,
-            detail="The local language model is unavailable. Check whether vLLM is running."
-        )
+        try:
+            async for event in stream_message(
+                request.message,
+                request.conversation_id
+            ):
+                event_type = event["type"]
 
-    except httpx.TimeoutException:
-        raise HTTPException(
-            status_code=504,
-            detail="The model took too long to respond. Please try again."
-        )
+                yield (
+                    f"event: {event_type}\n"
+                    f"data: {json.dumps(event)}\n\n"
+                )
 
-    except httpx.HTTPStatusError:
-        raise HTTPException(
-            status_code=502,
-            detail="The local model returned an unsuccessful response."
-        )
+        except httpx.ConnectError:
+            error = {
+                "message": "The local language model is unavailable. Check whether vLLM is running."
+            }
+            yield f"event: error\ndata: {json.dumps(error)}\n\n"
 
-    except httpx.RequestError:
-        raise HTTPException(
-            status_code=502,
-            detail="Could not communicate with the local language model."
-        )
+        except httpx.TimeoutException:
+            error = {
+                "message": "The model took too long to respond. Please try again."
+            }
+            yield f"event: error\ndata: {json.dumps(error)}\n\n"
 
-    return {
-        "received_message": reply,
-        "conversation_id": conversation_id
-    }
+        except httpx.HTTPStatusError:
+            error = {
+                "message": "The local model returned an unsuccessful response."
+            }
+            yield f"event: error\ndata: {json.dumps(error)}\n\n"
+
+        except httpx.RequestError:
+            error = {
+                "message": "Could not communicate with the local language model."
+            }
+            yield f"event: error\ndata: {json.dumps(error)}\n\n"
+
+        else:
+            yield "event: done\ndata: {}\n\n"
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no"
+        }
+    )
+
 
 @router.get("/chat/{conversation_id}/messages")
 async def get_chat_messages(conversation_id: int):

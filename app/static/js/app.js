@@ -14,23 +14,23 @@ newChatButton.addEventListener("click", function() {
     focusMessageInput();
 });
 
+
 chatForm.addEventListener("submit", async function(event) {
     event.preventDefault();
+
     const message = messageInput.value;
-    if (!message.trim()) {
-        return;
-    }
+    if (!message.trim()) return;
 
     const userMessageElement = displayMessage("user", message, "pending");
     messageInput.value = "";
     sendButton.disabled = true;
 
+    let assistantMessageElement = null;
+
     try {
         const response = await fetch("/api/chat", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 message: message,
                 conversation_id: currentConversationId === null
@@ -38,30 +38,93 @@ chatForm.addEventListener("submit", async function(event) {
                     : Number(currentConversationId)
             })
         });
-        
+
         if (!response.ok) {
             const errorData = await response.json();
-
             throw new Error(
                 errorData.detail || "Something went wrong. Please try again."
             );
         }
-        
-        const data = await response.json();
-        currentConversationId = data.conversation_id;
-        localStorage.setItem("noir_conversation_id", currentConversationId);
-        loadConversations();
 
-        // const reply = data.received_message;
-        // const assistantMessage = document.createElement("div");
-        // assistantMessage.classList.add("message", "assistant-message");
-        // assistantMessage.textContent = reply;
-        // chatMessages.appendChild(assistantMessage);
-        displayMessage("assistant", data.received_message);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        if (!response.body) {
+            throw new Error("Your browser does not support response streaming.");
+        }
+
+        // Create an empty assistant message for progressive output.
+        assistantMessageElement = displayMessage("assistant", "");
+        const assistantContentElement =
+            assistantMessageElement.querySelector(".message-content");
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        function handleEvent(eventBlock) {
+            const lines = eventBlock.split(/\r?\n/);
+            let eventType = "";
+            let eventData = "";
+
+            for (const line of lines) {
+                if (line.startsWith("event: ")) {
+                    eventType = line.slice(7);
+                } else if (line.startsWith("data: ")) {
+                    eventData += line.slice(6);
+                }
+            }
+
+            if (!eventType || !eventData) return;
+
+            const data = JSON.parse(eventData);
+
+            if (eventType === "metadata") {
+                currentConversationId = data.conversation_id;
+                localStorage.setItem(
+                    "noir_conversation_id",
+                    currentConversationId
+                );
+            }
+
+            else if (eventType === "token") {
+                assistantContentElement.textContent += data.content;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            else if (eventType === "error") {
+                throw new Error(data.message);
+            }
+        }
+
+        while (true) {
+            const { value, done } = await reader.read();
+
+            if (done) break;
+
+            buffer += decoder.decode(value, {stream: true});
+
+            const events = buffer.split(/\r?\n\r?\n/);
+            buffer = events.pop();
+
+            for (const eventBlock of events) {
+                handleEvent(eventBlock);
+            }
+        }
+
+        buffer += decoder.decode();
+
+        if (buffer.trim()) {
+            handleEvent(buffer);
+        }
+
+        loadConversations();
     }
+
     catch (error) {
         console.error("Error:", error.message);
+
+        // Remove an incomplete assistant response if generation failed.
+        if (assistantMessageElement) {
+            assistantMessageElement.remove();
+        }
 
         const errorIndicator = document.createElement("span");
         errorIndicator.classList.add("message-error-indicator");
@@ -74,11 +137,11 @@ chatForm.addEventListener("submit", async function(event) {
         errorIndicator.appendChild(tooltip);
         userMessageElement.appendChild(errorIndicator);
     }
+
     finally {
         sendButton.disabled = false;
         focusMessageInput();
     }
-
 });
 
 

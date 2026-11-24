@@ -5,6 +5,7 @@ import urllib.request
 from datetime import datetime
 import time
 from huggingface_hub import hf_hub_download
+import statistics
 
 def get_macos_version():
     result = subprocess.run(
@@ -186,7 +187,16 @@ def save_result(result):
     with open(results_path, "w", encoding="utf-8") as file:
         json.dump(results, file, indent=2)
 
-def measure_ttft():
+def calculate_statistics(values):
+    return {
+        "mean": round(statistics.mean(values), 2),
+        "median": round(statistics.median(values), 2),
+        "min": round(min(values), 2),
+        "max": round(max(values), 2),
+        "std_dev": round(statistics.stdev(values), 2),
+    }
+
+def measure_ttft(save=True):
     payload = {
         "model": get_vllm_model(),
         "messages": [
@@ -258,9 +268,14 @@ def measure_ttft():
 
     generation_time_ms = total_latency_ms - ttft_ms
 
-    if generated_tokens is not None and generation_time_ms > 0:
-        tokens_per_second = generated_tokens / (generation_time_ms / 1000)
-        print(f"Generation speed: {tokens_per_second:.2f} tokens/s")
+    if generated_tokens is None:
+        raise RuntimeError("Benchmark failed: Token usage information not received.")
+
+    if generation_time_ms <= 0:
+        raise RuntimeError("Benchmark failed: Invalid generation time.")
+
+    tokens_per_second = generated_tokens / (generation_time_ms / 1000)
+    print(f"Generation speed: {tokens_per_second:.2f} tokens/s")
 
     result = get_metadata()
 
@@ -272,10 +287,12 @@ def measure_ttft():
         "total_latency_ms": round(total_latency_ms, 2),
     }
 
-    save_result(result)
-    print("Benchmark result saved.")
-
+    if save:
+        save_result(result)
+        print("Benchmark result saved.")
     
+    return result
+
 
 BENCHMARK_PROMPT = "Explain what a computer is in one short sentence."
 MAX_TOKENS = 64
@@ -285,4 +302,34 @@ INFERENCE_BACKEND = "MLX/Metal"
 metadata = get_metadata()
 print(json.dumps(metadata, indent=2))
 
-measure_ttft()
+print("\nStarting warm-up...")
+measure_ttft(save=False)
+
+print("\nStarting benchmark...")
+benchmark_runs = []
+
+for run in range(5):
+    print(f"\nRun {run + 1}/5")
+    result = measure_ttft()
+    benchmark_runs.append(result)
+
+ttft_values = [
+    run["benchmark"]["ttft_ms"] for run in benchmark_runs
+]
+
+generation_values = [
+    run["benchmark"]["generation_tokens_per_second"] for run in benchmark_runs
+]
+
+latency_values = [
+    run["benchmark"]["total_latency_ms"] for run in benchmark_runs
+]
+
+summary = {
+    "ttft_ms": calculate_statistics(ttft_values),
+    "generation_tokens_per_second": calculate_statistics(generation_values),
+    "total_latency_ms": calculate_statistics(latency_values),
+}
+
+print("\nBenchmark Summary:")
+print(json.dumps(summary, indent=2))

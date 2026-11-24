@@ -1,6 +1,6 @@
 [
   {
-    "timestamp": "2026-11-24T13:58:49.186681+05:30",
+    "timestamp": "2026-11-24T14:13:44.477638+05:30",
     "model": {
       "name": "mlx-community/Qwen3-1.7B-4bit",
       "quantization": {
@@ -26,9 +26,937 @@
     "benchmark": {
       "prompt_tokens": 19,
       "output_tokens": 64,
-      "ttft_ms": 1095.44,
-      "generation_tokens_per_second": 212.75,
-      "total_latency_ms": 1396.26
+      "ttft_ms": 24.67,
+      "generation_tokens_per_second": 214.65,
+      "total_latency_ms": 322.83
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:13:45.321518+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 24.73,
+      "generation_tokens_per_second": 206.05,
+      "total_latency_ms": 335.34
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:13:46.220671+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 24.21,
+      "generation_tokens_per_second": 202.06,
+      "total_latency_ms": 340.96
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:13:47.120126+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 25.24,
+      "generation_tokens_per_second": 207.48,
+      "total_latency_ms": 333.7
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:13:48.071373+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 27.78,
+      "generation_tokens_per_second": 195.39,
+      "total_latency_ms": 355.33
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:14:17.465181+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 19.48,
+      "generation_tokens_per_second": 218.3,
+      "total_latency_ms": 312.65
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:14:18.369315+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 20.52,
+      "generation_tokens_per_second": 214.57,
+      "total_latency_ms": 318.79
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:14:19.198273+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 18.65,
+      "generation_tokens_per_second": 214.56,
+      "total_latency_ms": 316.94
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:14:20.033539+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 19.12,
+      "generation_tokens_per_second": 216.49,
+      "total_latency_ms": 314.74
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:14:20.828362+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 19.16,
+      "generation_tokens_per_second": 216.85,
+      "total_latency_ms": 314.3
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:16:17.496781+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 23.72,
+      "generation_tokens_per_second": 221.73,
+      "total_latency_ms": 312.36
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:16:18.423545+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 23.14,
+      "generation_tokens_per_second": 219.61,
+      "total_latency_ms": 314.57
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:16:19.209895+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 22.72,
+      "generation_tokens_per_second": 218.27,
+      "total_latency_ms": 315.94
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:16:20.006931+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 21.21,
+      "generation_tokens_per_second": 214.97,
+      "total_latency_ms": 318.93
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:16:20.783666+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 24.04,
+      "generation_tokens_per_second": 218.38,
+      "total_latency_ms": 317.11
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:17:10.780523+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 26.94,
+      "generation_tokens_per_second": 215.13,
+      "total_latency_ms": 324.44
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:17:11.548058+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 18.21,
+      "generation_tokens_per_second": 219.03,
+      "total_latency_ms": 310.41
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:17:12.455575+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 21.51,
+      "generation_tokens_per_second": 189.38,
+      "total_latency_ms": 359.45
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:17:13.311008+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 22.98,
+      "generation_tokens_per_second": 215.26,
+      "total_latency_ms": 320.29
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:17:14.135826+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 20.78,
+      "generation_tokens_per_second": 202.91,
+      "total_latency_ms": 336.19
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:19:06.257321+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 21.61,
+      "generation_tokens_per_second": 205.21,
+      "total_latency_ms": 333.49
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:19:07.056389+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 20.97,
+      "generation_tokens_per_second": 206.69,
+      "total_latency_ms": 330.61
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:19:07.888543+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 28.67,
+      "generation_tokens_per_second": 211.13,
+      "total_latency_ms": 331.8
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:19:08.801523+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 26.57,
+      "generation_tokens_per_second": 193.38,
+      "total_latency_ms": 357.53
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:19:09.650829+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 26.74,
+      "generation_tokens_per_second": 190.64,
+      "total_latency_ms": 362.46
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:27:04.978839+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 23.59,
+      "generation_tokens_per_second": 220.32,
+      "total_latency_ms": 314.07
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:27:05.834586+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 23.23,
+      "generation_tokens_per_second": 220.53,
+      "total_latency_ms": 313.44
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:27:06.613886+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 21.46,
+      "generation_tokens_per_second": 219.01,
+      "total_latency_ms": 313.69
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:27:07.404283+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 23.61,
+      "generation_tokens_per_second": 218.43,
+      "total_latency_ms": 316.6
+    }
+  },
+  {
+    "timestamp": "2026-11-24T14:27:08.284663+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-1.7B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 23.72,
+      "generation_tokens_per_second": 218.49,
+      "total_latency_ms": 316.64
     }
   }
 ]

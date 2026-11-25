@@ -46,7 +46,7 @@ source ~/.venv-vllm-metal/bin/activate
 Start the model server:
 
 ```bash
-vllm serve mlx-community/Qwen3-1.7B-4bit --max-model-len 2048
+vllm serve mlx-community/Qwen3-14B-4bit --max-model-len 2048
 ```
 
 The server exposes an OpenAI-compatible API on port `8000`.
@@ -136,7 +136,7 @@ The benchmark automatically collects hardware, software, and model metadata alon
 
 | Property | Configuration |
 |---|---|
-| Model | `mlx-community/Qwen3-1.7B-4bit` |
+| Model | `mlx-community/Qwen3-14B-4bit` |
 | Quantization | 4-bit |
 | Group Size | 64 |
 | Active Context Length | 2048 tokens |
@@ -147,7 +147,7 @@ This metadata is collected automatically by the benchmark script and stored with
 
 **Date:** November 24, 2026
 
-**Model:** `mlx-community/Qwen3-1.7B-4bit`
+**Model:** `mlx-community/Qwen3-14B-4bit`
 
 **Workload:**
 - Prompt: `Explain what a computer is in one short sentence.`

@@ -143,7 +143,7 @@ The benchmark automatically collects hardware, software, and model metadata alon
 
 This metadata is collected automatically by the benchmark script and stored with each result.
 
-## Initial Performance Baseline
+## Performance Baseline
 
 **Date:** November 24, 2026
 
@@ -157,7 +157,21 @@ This metadata is collected automatically by the benchmark script and stored with
 - Warm-up runs: 1
 - Measured runs: 5
 
-### Results
+### Qwen3-14B-4bit Results
+
+| Metric | Mean | Median | Min | Max | Std. Dev. |
+|---|---:|---:|---:|---:|---:|
+| TTFT (ms) | 63.95 | 64.11 | 62.71 | 65.04 | 0.90 |
+| Generation Speed (tokens/s) | 43.92 | 43.98 | 43.78 | 44.01 | 0.10 |
+| Total Latency (ms) | 1521.23 | 1519.94 | 1518.45 | 1524.68 | 3.06 |
+
+All five measured runs generated 64 completion tokens.
+
+These measurements represent warm-model inference performance. Model loading and cold-start latency are not included.
+
+### Previous Qwen3-1.7B-4bit Baseline
+
+The previous Qwen3-1.7B-4bit benchmark provides a comparison point for the current 14B deployment.
 
 | Metric | Mean | Median | Min | Max | Std. Dev. |
 |---|---:|---:|---:|---:|---:|
@@ -165,9 +179,13 @@ This metadata is collected automatically by the benchmark script and stored with
 | Generation Speed (tokens/s) | 219.36 | 219.01 | 218.43 | 220.53 | 1.00 |
 | Total Latency (ms) | 314.89 | 314.07 | 313.44 | 316.64 | 1.60 |
 
-All five measured runs generated 64 completion tokens.
+Relative to the 1.7B model, the 14B model measured approximately:
 
-These measurements represent warm-model inference performance. Model loading and cold-start latency are not included.
+- **2.77× slower TTFT**
+- **5× lower generation throughput**
+- **4.83× higher total latency**
+
+The 14B model nevertheless maintained stable performance across all five measured runs, with approximately 43.92 tokens/s generation throughput.
 
 ## Limitations and Interpretation
 

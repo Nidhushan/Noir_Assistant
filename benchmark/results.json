@@ -958,5 +958,165 @@
       "generation_tokens_per_second": 218.49,
       "total_latency_ms": 316.64
     }
+  },
+  {
+    "timestamp": "2026-11-24T19:08:51.678273+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-14B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 63.45,
+      "generation_tokens_per_second": 43.98,
+      "total_latency_ms": 1518.71
+    }
+  },
+  {
+    "timestamp": "2026-11-24T19:08:53.780359+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-14B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 65.04,
+      "generation_tokens_per_second": 43.99,
+      "total_latency_ms": 1519.94
+    }
+  },
+  {
+    "timestamp": "2026-11-24T19:08:55.889390+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-14B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 62.71,
+      "generation_tokens_per_second": 43.78,
+      "total_latency_ms": 1524.68
+    }
+  },
+  {
+    "timestamp": "2026-11-24T19:08:57.906679+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-14B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 64.11,
+      "generation_tokens_per_second": 44.01,
+      "total_latency_ms": 1518.45
+    }
+  },
+  {
+    "timestamp": "2026-11-24T19:08:59.995624+05:30",
+    "model": {
+      "name": "mlx-community/Qwen3-14B-4bit",
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "context_length": 2048
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "gpu": "Apple M3 Max",
+      "memory_gb": 128.0,
+      "architecture": "arm64"
+    },
+    "software": {
+      "os": "Darwin",
+      "os_version": "26.7.3",
+      "python_version": "3.14.3",
+      "inference_server": "vLLM",
+      "inference_server_version": "0.33.0",
+      "backend": "MLX/Metal"
+    },
+    "benchmark": {
+      "prompt_tokens": 19,
+      "output_tokens": 64,
+      "ttft_ms": 64.45,
+      "generation_tokens_per_second": 43.84,
+      "total_latency_ms": 1524.35
+    }
   }
 ]

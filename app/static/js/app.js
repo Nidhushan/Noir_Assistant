@@ -21,11 +21,15 @@ chatForm.addEventListener("submit", async function(event) {
     const message = messageInput.value;
     if (!message.trim()) return;
 
+    const shouldSpeakResponse = voiceRequestPending;
+    voiceRequestPending = false;
+
     const userMessageElement = displayMessage("user", message, "pending");
     messageInput.value = "";
     sendButton.disabled = true;
 
     let assistantMessageElement = null;
+    let assistantResponse = "";
 
     try {
         const response = await fetch("/api/chat", {
@@ -85,6 +89,7 @@ chatForm.addEventListener("submit", async function(event) {
             }
 
             else if (eventType === "token") {
+                assistantResponse += data.content;
                 assistantContentElement.textContent += data.content;
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
@@ -113,6 +118,10 @@ chatForm.addEventListener("submit", async function(event) {
 
         if (buffer.trim()) {
             handleEvent(buffer);
+        }
+
+        if (shouldSpeakResponse && assistantResponse.trim()) {
+            await speakResponse(assistantResponse);
         }
 
         loadConversations();
@@ -270,6 +279,7 @@ let mediaRecorder = null;
 let audioStream = null;
 let audioChunks = [];
 let audioUrl = null;
+let voiceRequestPending = false;
 
 
 async function transcribeAndSend(audioBlob) {
@@ -301,13 +311,10 @@ async function transcribeAndSend(audioBlob) {
 
         console.log("Transcription:", data);
 
-        // Put the transcript into the existing chat input.
         messageInput.value = data.text;
-
-        // Trigger the existing chat submission workflow.
+        voiceRequestPending = true;
         chatForm.requestSubmit();
-
-        voiceStatus.textContent = "Message sent";
+        voiceStatus.textContent = "Thinking...";
 
     } catch (error) {
         console.error("Voice processing error:", error);
@@ -392,6 +399,42 @@ voiceRecordButton.addEventListener("click", async function() {
         }
     }
 });
+
+async function speakResponse(text) {
+    try {
+        voiceStatus.textContent = "Generating speech...";
+
+        const response = await fetch("/api/voice/synthesize", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: text })
+        });
+
+        if (!response.ok) {
+            throw new Error("Speech generation failed.");
+        }
+
+        const audioBlob = await response.blob();
+        const speechUrl = URL.createObjectURL(audioBlob);
+
+        const speechAudio = new Audio(speechUrl);
+
+        speechAudio.addEventListener("ended", () => {
+            URL.revokeObjectURL(speechUrl);
+            voiceStatus.textContent = "Ready";
+        });
+
+        await speechAudio.play();
+
+        voiceStatus.textContent = "Speaking...";
+
+    } catch (error) {
+        console.error("Speech playback error:", error);
+        voiceStatus.textContent = "Speech playback failed.";
+    }
+}
 
 function openVoiceInterface() {
     voiceInterface.classList.add("active");

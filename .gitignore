@@ -39,3 +39,4 @@ htmlcov/
 *.log
 
 .venv-tts/
+plan/*

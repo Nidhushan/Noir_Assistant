@@ -38,5 +38,4 @@ htmlcov/
 # Logs
 *.log
 
-# Local project planning
-plan/
+.venv-tts/

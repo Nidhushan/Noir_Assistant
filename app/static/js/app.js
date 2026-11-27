@@ -21,11 +21,15 @@ chatForm.addEventListener("submit", async function(event) {
     const message = messageInput.value;
     if (!message.trim()) return;
 
+    const shouldSpeakResponse = voiceRequestPending;
+    voiceRequestPending = false;
+
     const userMessageElement = displayMessage("user", message, "pending");
     messageInput.value = "";
     sendButton.disabled = true;
 
     let assistantMessageElement = null;
+    let assistantResponse = "";
 
     try {
         const response = await fetch("/api/chat", {
@@ -85,6 +89,7 @@ chatForm.addEventListener("submit", async function(event) {
             }
 
             else if (eventType === "token") {
+                assistantResponse += data.content;
                 assistantContentElement.textContent += data.content;
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
@@ -113,6 +118,10 @@ chatForm.addEventListener("submit", async function(event) {
 
         if (buffer.trim()) {
             handleEvent(buffer);
+        }
+
+        if (shouldSpeakResponse && assistantResponse.trim()) {
+            await speakResponse(assistantResponse);
         }
 
         loadConversations();
@@ -257,3 +266,189 @@ function focusMessageInput() {
         messageInput.focus();
     }
 }
+
+const voiceButton = document.getElementById("voice-button");
+const voiceInterface = document.getElementById("voice-interface");
+const voiceClose = document.getElementById("voice-close");
+const voiceStatus = document.getElementById("voice-status");
+
+const voiceRecordButton = document.getElementById("voice-record");
+const voicePreview = document.getElementById("voice-preview");
+
+let mediaRecorder = null;
+let audioStream = null;
+let audioChunks = [];
+let audioUrl = null;
+let voiceRequestPending = false;
+
+
+async function transcribeAndSend(audioBlob) {
+    voiceStatus.textContent = "Transcribing...";
+    voiceRecordButton.disabled = true;
+
+    try {
+        const formData = new FormData();
+
+        formData.append("audio", audioBlob, "recording.webm");
+
+        const response = await fetch("/api/voice/transcribe", {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                errorData.detail || "Transcription failed."
+            );
+        }
+
+        const data = await response.json();
+
+        if (!data.text || !data.text.trim()) {
+            throw new Error("No speech detected.");
+        }
+
+        console.log("Transcription:", data);
+
+        messageInput.value = data.text;
+        voiceRequestPending = true;
+        chatForm.requestSubmit();
+        voiceStatus.textContent = "Thinking...";
+
+    } catch (error) {
+        console.error("Voice processing error:", error);
+
+        voiceStatus.textContent = error.message;
+
+    } finally {
+        voiceRecordButton.disabled = false;
+    }
+}
+
+
+voiceRecordButton.addEventListener("click", async function() {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        return;
+    }
+
+    try {
+        voiceStatus.textContent = "Requesting microphone...";
+
+        audioStream = await navigator.mediaDevices.getUserMedia({
+            audio: true
+        });
+
+        audioChunks = [];
+
+        const options = {};
+        if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+            options.mimeType = "audio/webm;codecs=opus";
+        }
+
+        mediaRecorder = new MediaRecorder(audioStream, options);
+
+        mediaRecorder.addEventListener("dataavailable", function(event) {
+            if (event.data.size > 0) {
+                audioChunks.push(event.data);
+            }
+        });
+
+        mediaRecorder.addEventListener("stop", function() {
+            const audioBlob = new Blob(audioChunks, {
+                type: mediaRecorder.mimeType
+            });
+
+            if (audioUrl) {
+                URL.revokeObjectURL(audioUrl);
+            }
+
+            audioUrl = URL.createObjectURL(audioBlob);
+            voicePreview.src = audioUrl;
+            voicePreview.hidden = false;
+
+            voiceStatus.textContent = "Recording ready";
+            voiceRecordButton.textContent = "Record again";
+            transcribeAndSend(audioBlob);
+
+            console.log("Recording captured:", {
+                type: audioBlob.type,
+                size: audioBlob.size,
+                sizeKB: (audioBlob.size / 1024).toFixed(2)
+            });
+
+            audioStream.getTracks().forEach(track => track.stop());
+            audioStream = null;
+        });
+
+        mediaRecorder.start();
+
+        voiceStatus.textContent = "Listening...";
+        voiceRecordButton.textContent = "Stop recording";
+
+    } catch (error) {
+        console.error("Microphone error:", error);
+
+        voiceStatus.textContent = "Microphone unavailable";
+        voiceRecordButton.textContent = "Try again";
+
+        if (audioStream) {
+            audioStream.getTracks().forEach(track => track.stop());
+            audioStream = null;
+        }
+    }
+});
+
+async function speakResponse(text) {
+    try {
+        voiceStatus.textContent = "Generating speech...";
+
+        const response = await fetch("/api/voice/synthesize", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: text })
+        });
+
+        if (!response.ok) {
+            throw new Error("Speech generation failed.");
+        }
+
+        const audioBlob = await response.blob();
+        const speechUrl = URL.createObjectURL(audioBlob);
+
+        const speechAudio = new Audio(speechUrl);
+
+        speechAudio.addEventListener("ended", () => {
+            URL.revokeObjectURL(speechUrl);
+            voiceStatus.textContent = "Ready";
+        });
+
+        await speechAudio.play();
+
+        voiceStatus.textContent = "Speaking...";
+
+    } catch (error) {
+        console.error("Speech playback error:", error);
+        voiceStatus.textContent = "Speech playback failed.";
+    }
+}
+
+function openVoiceInterface() {
+    voiceInterface.classList.add("active");
+    voiceStatus.textContent = "Ready";
+}
+
+function closeVoiceInterface() {
+    voiceInterface.classList.remove("active");
+}
+
+voiceButton.addEventListener("click", () => {
+    openVoiceInterface();
+});
+
+voiceClose.addEventListener("click", () => {
+    closeVoiceInterface();
+});

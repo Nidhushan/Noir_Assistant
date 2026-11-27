@@ -35,9 +35,55 @@
                     required
                 >
 
+                <button
+                    type="button"
+                    id="voice-button"
+                    aria-label="Start voice conversation"
+                >
+                    ◉
+                </button>
+
                 <button type="submit" aria-label="Send message">→</button>
             </form>
-        </main> 
+        </main>
+
+        <div class="voice-interface" id="voice-interface">
+            <div class="voice-header">
+                <span class="voice-title">NOIR</span>
+            </div>
+
+            <div class="voice-core-container">
+
+                <div class="holo-visualizer" aria-hidden="true">
+                    <div class="holo-wave">
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <div class="voice-status" id="voice-status">
+                    Ready
+                </div>
+                <button type="button" class="voice-record" id="voice-record">
+                    Start recording
+                </button>
+
+                <audio id="voice-preview" controls hidden></audio>
+            </div>
+
+            <button
+                type="button"
+                class="voice-close"
+                id="voice-close"
+                aria-label="Exit voice mode"
+            >
+                ×
+            </button>
+        </div>
+        
     </div>
 
     <script src="{{ url_for('static', path='/js/app.js') }}"></script>

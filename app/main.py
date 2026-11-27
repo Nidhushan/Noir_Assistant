@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 from contextlib import asynccontextmanager
 from app.db.database import initialize_database
 
-from app.api.routes import chat, health
+from app.api.routes import chat, health, voice
 
 logging.basicConfig(
     level=logging.INFO,
@@ -37,6 +37,7 @@ app.mount(
 
 app.include_router(health.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
+app.include_router(voice.router, prefix="/api")
 
 
 @app.get("/")
